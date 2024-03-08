@@ -1,0 +1,33 @@
+{
+    "name": "innoboxrr/livewire-comments",
+    "description": "M\u00f3dulo de comentarios para livewire",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Innoboxrr\\LivewireComments\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Homero Ra"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^8.21"
+    },
+    "require": {
+        "livewire/livewire": "^2.12|^3.4",
+        "innoboxrr/larapack-generator": "^4.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Innoboxrr\\LivewireComments\\Providers\\AppServiceProvider",
+                "Innoboxrr\\LivewireComments\\Providers\\AuthServiceProvider",
+                "Innoboxrr\\LivewireComments\\Providers\\EventServiceProvider",
+                "Innoboxrr\\LivewireComments\\Providers\\RouteServiceProvider"
+            ]
+        }
+    }
+}
