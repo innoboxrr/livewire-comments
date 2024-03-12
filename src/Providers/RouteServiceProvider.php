@@ -19,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
     {
 
         Route::middleware('web')
+            ->as('lwc.comments.')
             ->namespace('Innoboxrr\LivewireComments\Http\Controllers')
             ->group(__DIR__ . '/../../routes/web.php');
 
