@@ -1,5 +1,5 @@
 <div>
-    @if($role != 'student')
+    @if($role != 'student' || true)
         <div wire:ignore="" class="row">
             <div class="col-12">
                 <a 
