@@ -1,6 +1,6 @@
 {
     "name": "innoboxrr/livewire-comments",
-    "description": "M\u00f3dulo de comentarios para livewire",
+    "description": "Componente Livewire que incrusta el sistema de comentarios externo de Innoboxrr y rutas para listar los comentarios de un bloque o de un usuario.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -8,17 +8,26 @@
             "Innoboxrr\\LivewireComments\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Innoboxrr\\LivewireComments\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Homero Ra"
         }
     ],
-    "require-dev": {
-        "orchestra/testbench": "^8.21"
-    },
     "require": {
-        "livewire/livewire": "^2.12|^3.4",
-        "innoboxrr/larapack-generator": "^4.0"
+        "php": "^8.3",
+        "illuminate/http": "^13.0",
+        "illuminate/support": "^13.0",
+        "livewire/livewire": "^3.7.11 || ^4.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^11.0",
+        "innoboxrr/larapack-generator": "^9.0",
+        "phpunit/phpunit": "^12.0 || ^13.0"
     },
     "extra": {
         "laravel": {

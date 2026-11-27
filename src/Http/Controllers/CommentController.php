@@ -9,16 +9,15 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     
-    public function index(Request $request)
+    /**
+     * blockId y userId llegan en la ruta. Antes se validaban como entrada de
+     * la peticion, donde no estan, y la validacion fallaba siempre.
+     */
+    public function index(Request $request, $blockId, $userId)
     {
-        $validated = $request->validate([
-            'blockId' => 'required',
-            'userId' => 'required',
-        ]);
-
-        $cacheKey = "comments_{$validated['blockId']}_{$validated['userId']}";
-        $comments = Cache::remember($cacheKey, 1, function () use ($validated) {
-            $response = Http::get(config('lwc.base_url') . "/api/get-comments/{$validated['blockId']}/{$validated['userId']}");
+        $cacheKey = "comments_{$blockId}_{$userId}";
+        $comments = Cache::remember($cacheKey, 1, function () use ($blockId, $userId) {
+            $response = Http::get(config('lwc.base_url') . "/api/get-comments/{$blockId}/{$userId}");
             return $response->successful() ? $response->json() : [];
         });
 

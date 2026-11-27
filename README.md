@@ -1,37 +1,41 @@
 # Livewire Comments
 
-**A comment system for Laravel, rendered with Livewire.**
+**Embed the Innoboxrr comment service in a Laravel page, with a Livewire component.**
 
-Drop the component onto a page and get a working comment thread — posting, listing and deletion — without writing any JavaScript.
+The component does not store comments itself: it renders the embed script of the external comment service configured in `lwc.base_url` (by default `https://comment-system.innoboxrr.com`) and passes it the block, the signed-in user and their avatar. The package also exposes read-only pages that list comments fetched from that service.
 
 ```blade
-<livewire:comment :model="$article" />
+<livewire:lwc-comment block-id="lesson-42" title="Publicar comentario" role="student" />
 ```
+
+| Parameter | Default | |
+|---|---|---|
+| `block-id` | the current URL | The thread the comments belong to |
+| `title` | `Publicar comentario` | Heading shown by the embed |
+| `role` | `student` | Any other role shows a "Ver reporte de foro" link to the host route `forum.report` — define that route if you use it |
+
+The component needs an authenticated user (`auth()->user()->name`).
 
 ## What ships
 
 | | |
 |---|---|
-| `Livewire/Comment` | The component that renders and drives the thread |
-| `Models/Comment` | Polymorphic comment model — attach to any record |
-| `Http/Controllers/CommentController` | REST endpoints for the comment resource |
-| `resources/views/` | `comments.blade.php` and `comment.blade.php`, both publishable |
-| `config/lwc.php` | Configuration — table name, pagination, authorisation |
+| `Livewire\Comment` | The `lwc-comment` component |
+| `GET user/{id}/avatar` (`lwc.comments.user.avatar`) | Redirects to `$user->avatar` of `lwc.user_class` |
+| `GET block/{blockId}/user/{userId}/comments` | One user's comments in one block |
+| `GET block/{blockId}/comments` | All comments in a block |
+| `GET user/{userId}/comments` | All comments by a user |
+| `config/lwc.php` | `user_class` and `base_url` |
 
-Authorisation runs through a dedicated auth service provider, so who may post, edit or delete is a policy decision in your application rather than a setting in this package.
-
-## Why Livewire
-
-A comment thread is mostly server state: who can see what, who may edit what, what is published. Rendering it server-side keeps that authorisation logic in one place instead of duplicating it in a client-side store where it can drift.
-
-If you want the Tailwind-styled variant, see [wirecomments](https://github.com/innoboxrr/wirecomments).
+The three listing routes read from the service API and cache the answer for one second; if the service fails they show an empty list.
 
 ## Install
+
+Requires PHP 8.3, Laravel 13 and Livewire 3.7.11+ or 4.
 
 ```bash
 composer require innoboxrr/livewire-comments
 php artisan vendor:publish --tag=lwc-config
-php artisan migrate
 ```
 
 ---
